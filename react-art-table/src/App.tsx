@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { OverlayPanel } from "primereact/overlaypanel";
@@ -105,9 +105,9 @@ export default function App() {
   /* ===============================
      SELECTION HANDLER
   ================================ */
-  const selectedRows = artworks.filter((a) => selectedIds.has(a.id));
+  const selectedRows: Artwork[] = artworks.filter((a) => selectedIds.has(a.id));
 
-  const onSelectionChange = (e: any) => {
+  const onSelectionChange = (e: { value: Artwork[] }) => {
     const next = new Set(selectedIds);
     const currentPageIds = artworks.map((a) => a.id);
     const selectedPageIds = new Set((e.value as Artwork[]).map((r) => r.id));
@@ -181,7 +181,7 @@ export default function App() {
       </OverlayPanel>
 
       {/* DataTable */}
-      <DataTable<Artwork>
+      <DataTable
         value={artworks}
         loading={loading}
         lazy
@@ -192,7 +192,9 @@ export default function App() {
         dataKey="id"
         selection={selectedRows}
         onSelectionChange={onSelectionChange}
-        rowClassName={(row) => (selectedIds.has(row.id) ? "row-selected" : "")}>
+        rowClassName={(row: Artwork) =>
+          selectedIds.has(row.id) ? "row-selected" : ""
+        }>
         <Column
           selectionMode="multiple"
           header={headerCheckboxTemplate}
