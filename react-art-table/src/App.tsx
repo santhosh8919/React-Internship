@@ -2,10 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { OverlayPanel } from "primereact/overlaypanel";
-import type {
-  DataTablePageEvent,
-  DataTableSelectionChangeEvent,
-} from "primereact/datatable";
+import type { DataTablePageEvent } from "primereact/datatable";
 
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -110,7 +107,7 @@ export default function App() {
   ================================ */
   const selectedRows = artworks.filter((a) => selectedIds.has(a.id));
 
-  const onSelectionChange = (e: DataTableSelectionChangeEvent) => {
+  const onSelectionChange = (e: any) => {
     const next = new Set(selectedIds);
     const currentPageIds = artworks.map((a) => a.id);
     const selectedPageIds = new Set((e.value as Artwork[]).map((r) => r.id));
@@ -184,7 +181,7 @@ export default function App() {
       </OverlayPanel>
 
       {/* DataTable */}
-      <DataTable
+      <DataTable<Artwork>
         value={artworks}
         loading={loading}
         lazy
