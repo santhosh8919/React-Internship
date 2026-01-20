@@ -107,16 +107,16 @@ export default function App() {
   ================================ */
   const selectedRows: Artwork[] = artworks.filter((a) => selectedIds.has(a.id));
 
-  const onSelectionChange = (e: { value: Artwork[] }) => {
+  const onSelectionChange = (e: any) => {
     const next = new Set(selectedIds);
     const currentPageIds = artworks.map((a) => a.id);
-    const selectedPageIds = new Set((e.value as Artwork[]).map((r) => r.id));
+    const selectedPageIds = new Set(e.value.map((r: Artwork) => r.id));
 
     currentPageIds.forEach((id) => {
       if (!selectedPageIds.has(id)) next.delete(id);
     });
 
-    (e.value as Artwork[]).forEach((row) => next.add(row.id));
+    e.value.forEach((row: Artwork) => next.add(row.id));
     setSelectedIds(next);
   };
 
@@ -195,6 +195,7 @@ export default function App() {
         rowClassName={(row: Artwork) =>
           selectedIds.has(row.id) ? "row-selected" : ""
         }>
+        {/* ✅ FIRST COLUMN MUST HAVE selectionMode="multiple" */}
         <Column
           selectionMode="multiple"
           header={headerCheckboxTemplate}
