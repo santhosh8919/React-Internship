@@ -47,7 +47,6 @@ export default function App() {
   ================================ */
   useEffect(() => {
     setLoading(true);
-
     fetch(
       `https://api.artic.edu/api/v1/artworks?page=${page + 1}&limit=${ROWS}`,
     )
@@ -190,12 +189,13 @@ export default function App() {
         first={page * ROWS}
         onPage={(e: DataTablePageEvent) => setPage(e.page ?? 0)}
         dataKey="id"
+        selectionMode="multiple" // ✅ Netlify-friendly fix
         selection={selectedRows}
         onSelectionChange={onSelectionChange}
         rowClassName={(row: Artwork) =>
           selectedIds.has(row.id) ? "row-selected" : ""
         }>
-        {/* ✅ FIRST COLUMN MUST HAVE selectionMode="multiple" */}
+        {/* Header checkbox column */}
         <Column
           selectionMode="multiple"
           header={headerCheckboxTemplate}
@@ -206,7 +206,6 @@ export default function App() {
         <Column field="place_of_origin" header="PLACE OF ORIGIN" />
         <Column field="artist_display" header="ARTIST" />
 
-        {/* ✅ INSCRIPTIONS WITH N/A LOGIC */}
         <Column
           header="INSCRIPTIONS"
           body={(row: Artwork) =>
