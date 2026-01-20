@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Create Vite React TypeScript project",
+			"type": "shell",
+			"command": "npm create vite@latest react-art-table -- --template react-ts",
+			"group": "build"
+		}
+	]
+}
